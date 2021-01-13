@@ -44,9 +44,11 @@ public class Interface {
 			case 4:
 				break;
 			case 5:
+				getStudent();
 				break;
 
 			default:
+				System.out.println("Invalid input!");
 				break;
 			}
 		}
@@ -67,13 +69,13 @@ public class Interface {
 		System.out.print("Enter Student ID: ");
 		final int studentId = sc.nextInt();
 		
-		System.out.print("Enter Student First Name: ");
+		System.out.print("Enter Student's First Name: ");
 		final String studentName = sc.next();
 		
-		System.out.print("Enter Student Subject: ");
+		System.out.print("Enter Student's Subject: ");
 		final String studentSubject = sc.next();
 		
-		System.out.print("Enter Student Grade: ");
+		System.out.print("Enter Student's Grade: ");
 		final double studentGrade = sc.nextDouble();
 		
 		final Principal principal = new Principal();
@@ -85,11 +87,18 @@ public class Interface {
 	
 	public static void listStudents() throws SQLException {
 		 System.out.println("Student enrollment list");
-	        final Principal pricipal = new Principal();
-	        final List<Student> students = pricipal.getStudents();
-	        for (final Student student : students){
-				System.out.println(student.getStudentId()+" "+ student.getName());
-			}
+	     
+		 final Principal pricipal = new Principal();
+	     pricipal.getStudents();
+	       
+	}
+	
+	public static void getStudent() throws SQLException {
+		System.out.print("Enter student ID: ");
+		final int studentId = sc.nextInt();
+		
+		final Principal principal = new Principal();
+		principal.getStudent(studentId);
 	}
 }
 

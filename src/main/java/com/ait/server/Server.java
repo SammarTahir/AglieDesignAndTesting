@@ -35,7 +35,14 @@ public class Server {
 	}
 	
 	public static String listStudents() throws SQLException {
-			return stmt.executeQuery("select * from student;").toString();
+			ResultSet rs = stmt.executeQuery("select * from student;");
+			StringBuilder resultText = new StringBuilder();
+
+			while (rs.next()) {
+			    resultText.append("\nID: ").append(rs.getString(1)).append(" NAME: ").append(rs.getString(2))
+			    		.append(" SUBJECT: ").append(rs.getString(3)).append(" GRADE: ").append(rs.getString(4));
+			}
+			return resultText.toString();
 	}
 	public static void addStudent(final int studentId, final String name, final String subject, final double grade) throws SQLException {
 		String cmd = "INSERT INTO student VALUES ('"+ studentId +"',"
@@ -43,8 +50,19 @@ public class Server {
 		stmt.execute(cmd);
 	}
 	
-	public static void getStudent(final int studentId) throws SQLException {
+	public static String getStudent(final int studentId) throws SQLException {
+		StringBuilder resultText = new StringBuilder();
+		String cmd;
+		ResultSet rs;
 		
+		cmd ="select * from student where id = " + studentId + ";";
+		rs = stmt.executeQuery(cmd);
+
+		while (rs.next()) {
+		    resultText.append("\nID: ").append(rs.getString(1)).append(" NAME: ").append(rs.getString(2))
+		    		.append(" SUBJECT: ").append(rs.getString(3)).append(" GRADE: ").append(rs.getString(4));
+		}
+		return resultText.toString();
 	}
 	
 	public static void removeStudent() {

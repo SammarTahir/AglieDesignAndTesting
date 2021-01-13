@@ -15,7 +15,8 @@ public class Principal {
 		database.addStudent(studentId, student);
 	}
 	
-	public Student getStudent(final int studentId) {
+	public Student getStudent(final int studentId) throws SQLException {
+		System.out.println(Server.getStudent(studentId));
 		return database.getStudent(studentId);
 	
 	}
