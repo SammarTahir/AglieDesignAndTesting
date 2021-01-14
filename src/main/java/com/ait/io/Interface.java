@@ -9,7 +9,7 @@ import com.ait.entities.Student;
 import com.ait.server.Server;
 
 public class Interface {
-	public static String PASSWORD = "password";
+	final static String PASSWORD = "password";
 	static Scanner sc = new Scanner(System.in);
 	static Server s = new Server();
 
@@ -17,45 +17,17 @@ public class Interface {
 		// Connecting to the server
 		System.out.print("Please Enter password to connect to server: ");
 		String userLogin = sc.next();
-		if (userLogin.equalsIgnoreCase(PASSWORD)) {
-			s.initDBConnection();
-			start();
-		} else {
-			System.out.println("Invalid Password!");
-		}
-
+		connectToServer(userLogin);
 	}
 	
 	public static void start() throws SQLException {
-		int userInput = 7;
-		while(userInput != 6) {
-			displayMenu();
-			System.out.print("Please choose a number: ");
-			userInput = sc.nextInt();
-			switch (userInput) {
-			case 1:
-				listStudents();
-				break;
-			case 2:
-				addStudent();
-				break;
-			case 3:
-				break;
-			case 4:
-				break;
-			case 5:
-				getStudent();
-				break;
-
-			default:
-				System.out.println("Invalid input!");
-				break;
-			}
+		int exit = 7;
+		while(exit != 6) {
+			exit = displayMenu(7);
 		}
-		System.out.println("\nClosing application");
 	}
 	
-	public static void displayMenu() {
+	public static int displayMenu(int userInput) throws SQLException {
 		System.out.println("==== School Student Database ====");
 		System.out.println("1. - List all the students");
 		System.out.println("2. - Add a new student");
@@ -63,6 +35,30 @@ public class Interface {
 		System.out.println("4. - Update student information");
 		System.out.println("5. - Search for student");
 		System.out.println("6. - Exit the application");
+		System.out.print("Please choose a number: ");
+		userInput = sc.nextInt();
+		switch (userInput) {
+		case 1:
+			listStudents();
+			break;
+		case 2:
+			addStudent();
+			break;
+		case 3:
+			break;
+		case 4:
+			break;
+		case 5:
+			getStudent();
+			break;
+		case 6:
+			System.out.println("\nClosing application");
+			break;
+		default:
+			System.out.println("Invalid input!");
+			break;
+		}
+		return userInput;
 	}
 	
 	public static void addStudent() throws SQLException {
@@ -99,6 +95,18 @@ public class Interface {
 		
 		final Principal principal = new Principal();
 		principal.getStudent(studentId);
+	}
+	
+	public static Boolean connectToServer(String userLogin) throws SQLException {
+		if (userLogin.equalsIgnoreCase(PASSWORD)) {
+			s.initDBConnection();
+			start();
+			return true;
+		} else {
+			System.out.println("Invalid Password!");
+			return false;
+		}
+	
 	}
 }
 

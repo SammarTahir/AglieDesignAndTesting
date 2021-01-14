@@ -30,7 +30,7 @@ public class StudentDB implements StudentDAO {
 	@Override
 	public List<Student> getStudents() {
 		studentList.clear();
-		for (final Map.Entry student:students.entrySet()){
+		for (@SuppressWarnings("rawtypes") final Map.Entry student:students.entrySet()){
 			studentList.add((Student) student.getValue());
 		}
 		return studentList;
