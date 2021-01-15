@@ -14,20 +14,38 @@ public class Interface {
 	static Server s = new Server();
 
 	public static void main(String[] args) throws SQLException {
-		// Connecting to the server
+		// Getting password from user to ensure principal
 		System.out.print("Please Enter password to connect to server: ");
 		String userLogin = sc.next();
 		connectToServer(userLogin);
 	}
 	
+	// This method is used for password validation
+	public static Boolean connectToServer(String userLogin) throws SQLException {
+		if (userLogin.equalsIgnoreCase(PASSWORD)) {
+			// Connects to SQL database
+			s.initDBConnection();
+			// Starting the application
+			start();
+			return true;
+		} else {
+			// Only output if user enters wrong password
+			System.out.println("Invalid Password!");
+			return false;
+		}
+	
+	}
+	
 	public static void start() throws SQLException {
 		int exit = 7;
+		// Simple while loop for menu options
 		while(exit != 6) {
-			exit = displayMenu(7);
+			exit = menu(7);
 		}
 	}
 	
-	public static int displayMenu(int userInput) throws SQLException {
+	// Method for main user inputs
+	public static int menu(int userInput) throws SQLException {
 		System.out.println("==== School Student Database ====");
 		System.out.println("1. - List all the students");
 		System.out.println("2. - Add a new student");
@@ -37,6 +55,7 @@ public class Interface {
 		System.out.println("6. - Exit the application");
 		System.out.print("Please choose a number: ");
 		userInput = sc.nextInt();
+		// Switch with different CRUD options
 		switch (userInput) {
 		case 1:
 			listStudents();
@@ -45,8 +64,10 @@ public class Interface {
 			addStudent();
 			break;
 		case 3:
+			removeStudent();
 			break;
 		case 4:
+			updateStudent();
 			break;
 		case 5:
 			getStudent();
@@ -61,6 +82,7 @@ public class Interface {
 		return userInput;
 	}
 	
+	// Adding student to the database
 	public static void addStudent() throws SQLException {
 		System.out.print("Enter Student ID: ");
 		final int studentId = sc.nextInt();
@@ -81,32 +103,49 @@ public class Interface {
 		System.out.println("Student " + studentName + "has been added to the school");
 	}
 	
+	// Listing all students in database
 	public static void listStudents() throws SQLException {
 		 System.out.println("Student enrollment list");
 	     
 		 final Principal pricipal = new Principal();
-	     pricipal.getStudents();
+	     System.out.println(pricipal.getStudents());
 	       
 	}
 	
+	// Getting one student from database
 	public static void getStudent() throws SQLException {
 		System.out.print("Enter student ID: ");
 		final int studentId = sc.nextInt();
 		
 		final Principal principal = new Principal();
-		principal.getStudent(studentId);
+		System.out.println(principal.getStudent(studentId));
+	}
+
+	// Removing one student from database
+	public static void removeStudent() throws SQLException{
+		System.out.println("Enter student ID of student to remove: ");
+		final int studentId = sc.nextInt();
+		
+		final Principal principal = new Principal();
+		principal.removeStudent(studentId);
 	}
 	
-	public static Boolean connectToServer(String userLogin) throws SQLException {
-		if (userLogin.equalsIgnoreCase(PASSWORD)) {
-			s.initDBConnection();
-			start();
-			return true;
-		} else {
-			System.out.println("Invalid Password!");
-			return false;
-		}
-	
+	public static void updateStudent() throws SQLException {
+		System.out.print("Enter Student ID: ");
+		final int studentId = sc.nextInt();
+		
+		System.out.print("Enter new Student's First Name: ");
+		final String studentName = sc.next();
+		
+		System.out.print("Enter new Student's Subject: ");
+		final String studentSubject = sc.next();
+		
+		System.out.print("Enter new Student's Grade: ");
+		final double studentGrade = sc.nextDouble();
+		
+		final Principal principal = new Principal();
+		principal.updateStudent(studentId, studentName, studentSubject, studentGrade);
+		
 	}
 }
 

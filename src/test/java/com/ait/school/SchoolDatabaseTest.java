@@ -23,7 +23,6 @@ import com.ait.io.*;
 import com.ait.server.*;
 
 public class SchoolDatabaseTest {
-	private final SchoolDAO schoolDAO = mock(SchoolDAO.class);
 	private final StudentDAO studentDAO = mock(StudentDAO.class);
 	private final Server server = mock(Server.class);
 	private final Interface userInterface = mock(Interface.class);
@@ -38,7 +37,7 @@ public class SchoolDatabaseTest {
 	@Test
 	void testConnectDatabaseSucessful() throws SQLException{
 		password = "password";
-		when(userInterface.displayMenu(anyInt())).thenReturn(3);
+		when(userInterface.menu(anyInt())).thenReturn(3);
 		assertEquals(userInterface.connectToServer(password), true);
 	
 		
