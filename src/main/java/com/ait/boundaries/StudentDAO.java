@@ -9,4 +9,5 @@ public interface StudentDAO {
 	Server addStudent(int studentId, Student student);
 	Server getStudent(int studentId);
 	Server removeStudent(int studentId);
+	Server updateStudent(int studentId, Student student);
 }
