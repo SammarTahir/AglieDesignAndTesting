@@ -31,6 +31,7 @@ public class Server {
 			ps = con.prepareStatement("select * from studentDB");
 		} catch (Exception e) {
 			System.out.println("Failed to initialise DB Connection");
+			System.exit(0);
 		}
 	}
 
